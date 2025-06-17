@@ -1,0 +1,153 @@
+body {
+    font-family: Arial, sans-serif; /* Changed to Arial, more common fallback */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    background-color: #f4f4f8; /* Slightly different background */
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px; /* Added max-width for very large screens */
+    margin: 20px auto; /* Added top/bottom margin */
+    background-color: #fff;
+    padding: 25px; /* Slightly more padding */
+    border-radius: 8px; /* Added border-radius */
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1); /* Enhanced shadow */
+}
+
+h1 {
+    color: #2c3e50; /* Darker, more modern blue */
+    text-align: center; /* Center the main title */
+    margin-bottom: 30px; /* More space below title */
+}
+
+h2 {
+    color: #34495e; /* Slightly lighter than h1 */
+    border-bottom: 2px solid #ecf0f1; /* Subtle border */
+    padding-bottom: 10px;
+    margin-top: 30px; /* Space above h2 */
+    margin-bottom: 20px;
+}
+
+/* Form specific styles */
+.form-section {
+    margin-bottom: 30px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Adjusted minmax */
+    gap: 20px; /* Increased gap */
+    margin-bottom: 25px;
+}
+
+.form-grid > div { /* Direct children of form-grid */
+    background-color: #fdfdfd; /* Slight background for each grid item */
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.form-grid label {
+    font-weight: bold;
+    display: block; /* Ensure label takes full width */
+    margin-bottom: 8px; /* Space between label and input */
+    color: #34495e;
+}
+
+.form-grid input[type="text"],
+.form-grid input[type="number"],
+.form-grid input[type="file"],
+.form-grid input[type="color"] {
+    padding: 10px; /* Uniform padding */
+    border: 1px solid #bdc3c7; /* Softer border color */
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 4px; /* Space from label if it wraps */
+}
+
+/* Style file input differently as it's tricky */
+input[type="file"] {
+    background-color: #ecf0f1; /* Light background for file input */
+    padding: 8px;
+}
+input[type="file"]::file-selector-button { /* Style the button part of file input */
+    padding: 8px 12px;
+    background-color: #3498db; /* Blue button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+input[type="file"]::file-selector-button:hover {
+    background-color: #2980b9;
+}
+
+
+input[type="color"] {
+    height: 40px; /* Keep consistent height */
+    padding: 5px; /* Adjust padding for color type if needed */
+}
+
+
+button, input[type="submit"] { /* General button styling */
+    padding: 12px 20px; /* Larger padding */
+    background-color: #3498db; /* Primary blue */
+    color: white;
+    border: none;
+    border-radius: 5px; /* Slightly more rounded */
+    cursor: pointer;
+    font-size: 1em; /* Consistent font size */
+    transition: background-color 0.2s ease-in-out; /* Smooth transition */
+}
+
+button:hover, input[type="submit"]:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+#downloadSvgButton { /* Specific style for download button if needed */
+    background-color: #2ecc71; /* Green for download */
+    margin-top: 15px; /* Space above download button */
+}
+#downloadSvgButton:hover {
+    background-color: #27ae60; /* Darker green */
+}
+
+
+.flashes {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0; /* Standardized margin */
+}
+.flashes li {
+    padding: 12px 15px; /* More padding */
+    background-color: #e74c3c; /* Red for errors */
+    color: white;
+    border-radius: 4px;
+    margin-bottom: 10px; /* Space between messages */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.svg-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #ffffff; /* White background for SVG area */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+#svgDisplayArea { /* Container for the SVG itself */
+    overflow: auto; /* Enable scroll if SVG is larger than container */
+    max-height: 70vh; /* Limit height to 70% of viewport height */
+}
+
+#svgDisplayArea svg {
+    display: block; /* Remove extra space below SVG if it's inline */
+    margin: auto; /* Center SVG if it's smaller than container */
+    max-width: 100%; /* Responsive SVG */
+    border: 1px solid #dfe4ea; /* Softer border for SVG */
+}

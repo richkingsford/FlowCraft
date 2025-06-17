@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workflow Visualizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Workflow Visualizer</h1>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('generate_diagram') }}" enctype="multipart/form-data" class="form-section">
+            <div>
+                <label for="workflow_file">Workflow JSON File:</label>
+                <input type="file" id="workflow_file" name="workflow_file" accept=".json" required>
+            </div>
+
+            <h2>Visual Parameters:</h2>
+            <div class="form-grid">
+                <div>
+                    <label for="node_width">Node Width (px):</label>
+                    <input type="number" id="node_width" name="node_width" value="150">
+                </div>
+                <div>
+                    <label for="node_height">Min Node Height (px):</label>
+                    <input type="number" id="node_height" name="node_height" value="75">
+                </div>
+                <div>
+                    <label for="margin">Margin Between Nodes (px):</label>
+                    <input type="number" id="margin" name="margin" value="40">
+                </div>
+                <div>
+                    <label for="text_padding">Node Internal Text Padding (px):</label>
+                    <input type="number" id="text_padding" name="text_padding" value="10">
+                </div>
+                <div>
+                    <label for="line_height_px">Text Line Height (px):</label>
+                    <input type="number" id="line_height_px" name="line_height_px" value="18">
+                </div>
+                <div>
+                    <label for="chars_per_line_approx">Approx Chars Per Line (wrapping):</label>
+                    <input type="number" id="chars_per_line_approx" name="chars_per_line_approx" value="17">
+                </div>
+                 <div>
+                    <label for="arrow_size">Arrowhead Size (px):</label>
+                    <input type="number" id="arrow_size" name="arrow_size" value="10">
+                </div>
+                <div>
+                    <label for="fill_color_action">Action Node Color:</label>
+                    <input type="color" id="fill_color_action" name="fill_color_action" value="#ADD8E6">
+                </div>
+                <div>
+                    <label for="fill_color_decision">Decision Node Color:</label>
+                    <input type="color" id="fill_color_decision" name="fill_color_decision" value="#FFFFE0">
+                </div>
+                <div>
+                    <label for="text_color">Text Color:</label>
+                    <input type="color" id="text_color" name="text_color" value="#000000">
+                </div>
+                <div>
+                    <label for="border_color">Border Color:</label>
+                    <input type="color" id="border_color" name="border_color" value="#000000">
+                </div>
+                <div>
+                    <label for="line_color">Connector Line Color:</label>
+                    <input type="color" id="line_color" name="line_color" value="#333333">
+                </div>
+            </div>
+            <br>
+            <button type="submit">Generate Diagram</button>
+        </form>
+
+        {% if svg_output %}
+        <div class="svg-container">
+            <h2>Generated Workflow Diagram:</h2>
+            <div id="svgDisplayArea">
+                {{ svg_output }}
+            </div>
+            <button id="downloadSvgButton">Download SVG</button>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const svgOutputPresent = {{ svg_output|tojson|safe }};
+            const downloadButton = document.getElementById('downloadSvgButton');
+            const svgDisplayArea = document.getElementById('svgDisplayArea');
+
+            // Check if an SVG is actually rendered inside svgDisplayArea
+            const svgElementExists = svgDisplayArea && svgDisplayArea.querySelector('svg');
+
+            if (svgOutputPresent && svgElementExists) {
+                if(downloadButton) downloadButton.style.display = 'block'; // Or 'inline-block' or other appropriate value
+            } else {
+                if(downloadButton) downloadButton.style.display = 'none';
+            }
+
+            if (downloadButton) {
+                downloadButton.addEventListener('click', function() {
+                    if (svgDisplayArea && svgDisplayArea.querySelector('svg')) {
+                        const svgElement = svgDisplayArea.querySelector('svg');
+                        const svgData = svgElement.outerHTML;
+                        const blob = new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'});
+                        const url = URL.createObjectURL(blob);
+
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = 'workflow_diagram.svg';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                    } else {
+                        alert('No SVG found to download.');
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

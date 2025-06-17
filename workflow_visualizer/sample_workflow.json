@@ -1,0 +1,126 @@
+{
+  "QA_Process": [
+    {
+      "stepID": "1",
+      "type": "action",
+      "name": "A PR is ready for testing",
+      "nextStepID": "2"
+    },
+    {
+      "stepID": "2",
+      "type": "action",
+      "name": "Automated regression tests run",
+      "nextStepID": "3"
+    },
+    {
+      "stepID": "3",
+      "type": "decision",
+      "name": "Issue found?",
+      "options": [
+        {
+          "decisionText": "Yes",
+          "nextStepID": "10"
+        },
+        {
+          "decisionText": "No",
+          "nextStepID": "4"
+        }
+      ]
+    },
+    {
+      "stepID": "4",
+      "type": "action",
+      "name": "Code review",
+      "nextStepID": "5"
+    },
+    {
+      "stepID": "5",
+      "type": "decision",
+      "name": "Issue found?",
+      "options": [
+        {
+          "decisionText": "Yes",
+          "nextStepID": "10"
+        },
+        {
+          "decisionText": "No",
+          "nextStepID": "6"
+        }
+      ]
+    },
+    {
+      "stepID": "6",
+      "type": "action",
+      "name": "Smoke test",
+      "nextStepID": "7"
+    },
+    {
+      "stepID": "7",
+      "type": "decision",
+      "name": "Issue found?",
+      "options": [
+        {
+          "decisionText": "Yes",
+          "nextStepID": "10"
+        },
+        {
+          "decisionText": "No",
+          "nextStepID": "8"
+        }
+      ]
+    },
+    {
+      "stepID": "8",
+      "type": "action",
+      "name": "Rigorous functional tests",
+      "nextStepID": "9"
+    },
+    {
+      "stepID": "9",
+      "type": "decision",
+      "name": "Issue found?",
+      "options": [
+        {
+          "decisionText": "Yes",
+          "nextStepID": "10"
+        },
+        {
+          "decisionText": "No",
+          "nextStepID": "11"
+        }
+      ]
+    },
+    {
+      "stepID": "10",
+      "type": "action",
+      "name": "Bug reported and fixed",
+      "nextStepID": "previous_decision"
+    },
+    {
+      "stepID": "11",
+      "type": "action",
+      "name": "Manual regression tests",
+      "nextStepID": "12"
+    },
+    {
+      "stepID": "12",
+      "type": "decision",
+      "name": "Issue found?",
+      "options": [
+        {
+          "decisionText": "Yes",
+          "nextStepID": "10"
+        },
+        {
+          "decisionText": "No",
+          "nextStepID": "13"
+        }
+      ]
+    },
+    {
+      "stepID": "13",
+      "type": "action",
+      "name": "PR is approved to deploy to production"
+    }
+  ]
+}
